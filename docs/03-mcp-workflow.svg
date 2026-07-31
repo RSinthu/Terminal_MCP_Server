@@ -1,0 +1,145 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1160 780" width="1160" height="780" font-family="Segoe UI, system-ui, -apple-system, sans-serif">
+  <rect x="0" y="0" width="1160" height="780" fill="#ffffff"/>
+  <text x="580" y="38" text-anchor="middle" font-size="22" font-weight="700" fill="#1a1a1a">The full MCP request/response workflow</text>
+  <text x="580" y="61" text-anchor="middle" font-size="13" fill="#666">One user message → two round trips to the server, two round trips to the LLM</text>
+
+  <!-- lane headers -->
+  <rect x="30" y="82" width="150" height="48" rx="9" fill="#eceff3" stroke="#7a8798" stroke-width="1.8"/>
+  <text x="105" y="112" text-anchor="middle" font-size="13.5" font-weight="700" fill="#39414d">USER</text>
+
+  <rect x="230" y="82" width="180" height="48" rx="9" fill="#eef4fc" stroke="#2b5fa8" stroke-width="1.8"/>
+  <text x="320" y="105" text-anchor="middle" font-size="13.5" font-weight="700" fill="#2b5fa8">MCP HOST</text>
+  <text x="320" y="122" text-anchor="middle" font-size="11" fill="#4a6a94">+ MCP client inside</text>
+
+  <rect x="470" y="82" width="150" height="48" rx="9" fill="#f3edfa" stroke="#7a4fb5" stroke-width="1.8"/>
+  <text x="545" y="112" text-anchor="middle" font-size="13.5" font-weight="700" fill="#5c3a8c">LLM</text>
+
+  <rect x="690" y="82" width="170" height="48" rx="9" fill="#fff8e8" stroke="#c98a00" stroke-width="1.8"/>
+  <text x="775" y="112" text-anchor="middle" font-size="13.5" font-weight="700" fill="#8a5a00">MCP SERVER</text>
+
+  <rect x="930" y="82" width="200" height="48" rx="9" fill="#f2f9f4" stroke="#1f7a45" stroke-width="1.8"/>
+  <text x="1030" y="105" text-anchor="middle" font-size="13.5" font-weight="700" fill="#1f7a45">SERVICE</text>
+  <text x="1030" y="122" text-anchor="middle" font-size="11" fill="#3d6b50">shell, DB, API…</text>
+
+  <!-- lifelines -->
+  <g stroke="#c3cad3" stroke-width="1.6" stroke-dasharray="5 5">
+    <line x1="105" y1="132" x2="105" y2="700"/>
+    <line x1="320" y1="132" x2="320" y2="700"/>
+    <line x1="545" y1="132" x2="545" y2="700"/>
+    <line x1="775" y1="132" x2="775" y2="700"/>
+    <line x1="1030" y1="132" x2="1030" y2="700"/>
+  </g>
+
+  <!-- phase bands -->
+  <rect x="196" y="152" width="620" height="98" rx="8" fill="#fbfcfd" stroke="#dde3ea" stroke-width="1.2"/>
+  <text x="206" y="170" font-size="11" font-weight="700" fill="#95a1af" letter-spacing="0.6">PHASE 1 — DISCOVERY</text>
+
+  <rect x="196" y="262" width="620" height="98" rx="8" fill="#fbfcfd" stroke="#dde3ea" stroke-width="1.2"/>
+  <text x="206" y="280" font-size="11" font-weight="700" fill="#95a1af" letter-spacing="0.6">PHASE 2 — DECISION</text>
+
+  <rect x="196" y="372" width="900" height="150" rx="8" fill="#fbfcfd" stroke="#dde3ea" stroke-width="1.2"/>
+  <text x="206" y="390" font-size="11" font-weight="700" fill="#95a1af" letter-spacing="0.6">PHASE 3 — EXECUTION</text>
+
+  <rect x="196" y="534" width="620" height="100" rx="8" fill="#fbfcfd" stroke="#dde3ea" stroke-width="1.2"/>
+  <text x="206" y="552" font-size="11" font-weight="700" fill="#95a1af" letter-spacing="0.6">PHASE 4 — ANSWER</text>
+
+  <!-- step 1 -->
+  <g stroke="#39414d" stroke-width="1.9" fill="none" marker-end="url(#aGray)">
+    <path d="M 105 196 L 316 196"/>
+  </g>
+  <circle cx="115" cy="182" r="11" fill="#39414d"/><text x="115" y="186.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">1</text>
+  <text x="215" y="190" text-anchor="middle" font-size="11.5" fill="#39414d">user prompt</text>
+
+  <!-- step 2 -->
+  <g stroke="#c98a00" stroke-width="1.9" fill="none" marker-end="url(#aOrange)">
+    <path d="M 320 224 L 771 224"/>
+  </g>
+  <circle cx="332" cy="210" r="11" fill="#c98a00"/><text x="332" y="214.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">2</text>
+  <text x="550" y="218" text-anchor="middle" font-size="11.5" fill="#8a5a00">client asks: which tools do you have?  (tools/list)</text>
+
+  <!-- step 3 -->
+  <g stroke="#c98a00" stroke-width="1.9" fill="none" marker-end="url(#aOrange)" stroke-dasharray="6 4">
+    <path d="M 775 244 L 324 244"/>
+  </g>
+  <circle cx="763" cy="230" r="11" fill="#c98a00"/><text x="763" y="234.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">3</text>
+  <text x="550" y="238" text-anchor="middle" font-size="11.5" fill="#8a5a00">tool catalog: name + docstring + argument schema</text>
+
+  <!-- step 4 -->
+  <g stroke="#7a4fb5" stroke-width="1.9" fill="none" marker-end="url(#aPurple)">
+    <path d="M 320 306 L 541 306"/>
+  </g>
+  <circle cx="332" cy="292" r="11" fill="#7a4fb5"/><text x="332" y="296.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">4</text>
+  <text x="432" y="300" text-anchor="middle" font-size="11.5" fill="#5c3a8c">prompt + tool catalog</text>
+
+  <!-- step 5 -->
+  <g stroke="#7a4fb5" stroke-width="1.9" fill="none" marker-end="url(#aPurple)" stroke-dasharray="6 4">
+    <path d="M 545 336 L 324 336"/>
+  </g>
+  <circle cx="533" cy="322" r="11" fill="#7a4fb5"/><text x="533" y="326.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">5</text>
+  <text x="434" y="330" text-anchor="middle" font-size="11.5" fill="#5c3a8c">"call run_command('mkdir demo')"</text>
+
+  <!-- step 6 -->
+  <g stroke="#c98a00" stroke-width="1.9" fill="none" marker-end="url(#aOrange)">
+    <path d="M 320 418 L 771 418"/>
+  </g>
+  <circle cx="332" cy="404" r="11" fill="#c98a00"/><text x="332" y="408.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">6</text>
+  <text x="550" y="412" text-anchor="middle" font-size="11.5" fill="#8a5a00">invoke that tool with those arguments  (tools/call)</text>
+
+  <!-- step 7 -->
+  <g stroke="#1f7a45" stroke-width="1.9" fill="none" marker-end="url(#aGreen)">
+    <path d="M 775 448 L 1026 448"/>
+  </g>
+  <circle cx="787" cy="434" r="11" fill="#1f7a45"/><text x="787" y="438.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">7</text>
+  <text x="900" y="442" text-anchor="middle" font-size="11.5" fill="#1f7a45">real work happens</text>
+
+  <!-- step 8 -->
+  <g stroke="#1f7a45" stroke-width="1.9" fill="none" marker-end="url(#aGreen)" stroke-dasharray="6 4">
+    <path d="M 1030 478 L 324 478"/>
+  </g>
+  <circle cx="1018" cy="464" r="11" fill="#1f7a45"/><text x="1018" y="468.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">8</text>
+  <text x="676" y="472" text-anchor="middle" font-size="11.5" fill="#1f7a45">tool result travels back through the server to the client</text>
+
+  <rect x="352" y="488" width="300" height="26" rx="6" fill="#e3f4e9" stroke="#a8d5b5" stroke-width="1.2"/>
+  <text x="502" y="506" text-anchor="middle" font-size="11.5" font-weight="600" fill="#1f7a45">this result IS the context for the LLM</text>
+
+  <!-- step 9 -->
+  <g stroke="#7a4fb5" stroke-width="1.9" fill="none" marker-end="url(#aPurple)">
+    <path d="M 320 578 L 541 578"/>
+  </g>
+  <circle cx="332" cy="564" r="11" fill="#7a4fb5"/><text x="332" y="568.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">9</text>
+  <text x="430" y="572" text-anchor="middle" font-size="11.5" fill="#5c3a8c">prompt + tool output as context</text>
+
+  <!-- step 10 -->
+  <g stroke="#7a4fb5" stroke-width="1.9" fill="none" marker-end="url(#aPurple)" stroke-dasharray="6 4">
+    <path d="M 545 608 L 324 608"/>
+  </g>
+  <circle cx="533" cy="594" r="11" fill="#7a4fb5"/><text x="533" y="598.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">10</text>
+  <text x="432" y="602" text-anchor="middle" font-size="11.5" fill="#5c3a8c">grounded natural-language answer</text>
+
+  <!-- step 11 -->
+  <g stroke="#39414d" stroke-width="1.9" fill="none" marker-end="url(#aGray)">
+    <path d="M 320 660 L 109 660"/>
+  </g>
+  <circle cx="308" cy="646" r="11" fill="#39414d"/><text x="308" y="650.5" text-anchor="middle" font-size="12" font-weight="700" fill="#fff">11</text>
+  <text x="215" y="654" text-anchor="middle" font-size="11.5" fill="#39414d">"Created the folder demo."</text>
+
+  <!-- footnote -->
+  <rect x="30" y="700" width="1100" height="58" rx="9" fill="#f7f9fb" stroke="#dde3ea" stroke-width="1.3"/>
+  <text x="48" y="722" font-size="12" fill="#39414d"><tspan font-weight="700">Key point:</tspan> the LLM never talks to the tool. The host is the only thing that talks to both — it asks the LLM what to do, asks the server to do it,</text>
+  <text x="48" y="742" font-size="12" fill="#39414d">then feeds the result back to the LLM as context. Steps 5–10 repeat in a loop while the model keeps requesting more tool calls.</text>
+
+  <defs>
+    <marker id="aGray" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#39414d"/>
+    </marker>
+    <marker id="aOrange" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#c98a00"/>
+    </marker>
+    <marker id="aPurple" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#7a4fb5"/>
+    </marker>
+    <marker id="aGreen" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f7a45"/>
+    </marker>
+  </defs>
+</svg>

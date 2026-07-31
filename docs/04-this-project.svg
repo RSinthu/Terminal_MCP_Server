@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 470" width="1120" height="470" font-family="Segoe UI, system-ui, -apple-system, sans-serif">
+  <rect x="0" y="0" width="1120" height="470" fill="#ffffff"/>
+  <text x="560" y="40" text-anchor="middle" font-size="21" font-weight="700" fill="#1a1a1a">This repository, mapped onto the MCP roles</text>
+
+  <!-- host -->
+  <rect x="40" y="90" width="230" height="230" rx="12" fill="#eef4fc" stroke="#2b5fa8" stroke-width="2.4"/>
+  <text x="155" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#2b5fa8">MCP HOST</text>
+  <text x="155" y="145" text-anchor="middle" font-size="12.5" fill="#333">Claude Desktop</text>
+  <rect x="65" y="165" width="180" height="70" rx="8" fill="#ffffff" stroke="#2b5fa8" stroke-width="1.5"/>
+  <text x="155" y="190" text-anchor="middle" font-size="12.5" font-weight="600" fill="#2b5fa8">MCP client</text>
+  <text x="155" y="209" text-anchor="middle" font-size="11" fill="#555">spawned from</text>
+  <text x="155" y="225" text-anchor="middle" font-size="11" fill="#555">claude_desktop_config.json</text>
+  <text x="155" y="262" text-anchor="middle" font-size="11" fill="#4a6a94">Launches the server as a</text>
+  <text x="155" y="279" text-anchor="middle" font-size="11" fill="#4a6a94">child process and speaks</text>
+  <text x="155" y="296" text-anchor="middle" font-size="11" fill="#4a6a94">JSON-RPC over stdio</text>
+
+  <!-- transport -->
+  <rect x="308" y="150" width="52" height="150" rx="9" fill="#3b3b3b"/>
+  <text x="334" y="225" text-anchor="middle" font-size="12.5" font-weight="700" fill="#ffffff" transform="rotate(-90 334 225)">stdio</text>
+  <path d="M 272 205 L 304 205" stroke="#3b3b3b" stroke-width="2" fill="none" marker-end="url(#a4)"/>
+  <path d="M 396 245 L 364 245" stroke="#3b3b3b" stroke-width="2" fill="none" marker-end="url(#a4)"/>
+
+  <!-- server -->
+  <rect x="400" y="90" width="290" height="230" rx="12" fill="#fff8e8" stroke="#c98a00" stroke-width="2.4"/>
+  <text x="545" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#8a5a00">MCP SERVER</text>
+  <text x="545" y="145" text-anchor="middle" font-size="12.5" fill="#333">main.py — FastMCP("Terminal")</text>
+  <rect x="425" y="165" width="240" height="62" rx="8" fill="#ffffff" stroke="#c98a00" stroke-width="1.5"/>
+  <text x="545" y="188" text-anchor="middle" font-size="12.5" font-weight="600" fill="#8a5a00">@mcp.tool()</text>
+  <text x="545" y="208" text-anchor="middle" font-size="12" fill="#333">async def run_command(command)</text>
+  <text x="545" y="252" text-anchor="middle" font-size="11" fill="#8a5a00">FastMCP turns the function signature</text>
+  <text x="545" y="269" text-anchor="middle" font-size="11" fill="#8a5a00">into the schema and the docstring</text>
+  <text x="545" y="286" text-anchor="middle" font-size="11" fill="#8a5a00">into the description the LLM reads</text>
+
+  <!-- service -->
+  <rect x="790" y="90" width="290" height="230" rx="12" fill="#f2f9f4" stroke="#1f7a45" stroke-width="2.4"/>
+  <text x="935" y="122" text-anchor="middle" font-size="15" font-weight="700" fill="#1f7a45">SERVICE</text>
+  <text x="935" y="145" text-anchor="middle" font-size="12.5" fill="#333">your Windows shell</text>
+  <rect x="815" y="165" width="240" height="62" rx="8" fill="#ffffff" stroke="#1f7a45" stroke-width="1.5"/>
+  <text x="935" y="190" text-anchor="middle" font-size="12" fill="#333">subprocess.run(..., shell=True,</text>
+  <text x="935" y="210" text-anchor="middle" font-size="12" fill="#333">cwd=DEFAULT_WORKSPACE)</text>
+  <text x="935" y="252" text-anchor="middle" font-size="11" fill="#1f7a45">Every command runs with the</text>
+  <text x="935" y="269" text-anchor="middle" font-size="11" fill="#1f7a45">workspace folder as its working</text>
+  <text x="935" y="286" text-anchor="middle" font-size="11" fill="#1f7a45">directory — that is the sandbox</text>
+
+  <path d="M 692 205 L 786 205" stroke="#1f7a45" stroke-width="2" fill="none" marker-end="url(#a4g)"/>
+  <path d="M 786 245 L 692 245" stroke="#1f7a45" stroke-width="2" fill="none" marker-end="url(#a4g)" stroke-dasharray="6 4"/>
+  <text x="739" y="198" text-anchor="middle" font-size="10.5" fill="#1f7a45">run</text>
+  <text x="739" y="266" text-anchor="middle" font-size="10.5" fill="#1f7a45">stdout</text>
+
+  <rect x="40" y="356" width="1040" height="80" rx="10" fill="#fff5f5" stroke="#f0b4b4" stroke-width="1.6"/>
+  <text x="60" y="382" font-size="13" font-weight="700" fill="#b02a2a">Security note</text>
+  <text x="60" y="404" font-size="12" fill="#5c3333">This server executes arbitrary shell commands with your user's privileges. `cwd` only sets the working directory — it does not confine the</text>
+  <text x="60" y="424" font-size="12" fill="#5c3333">command. `cd /`, absolute paths, and `rm -rf` all still work. Keep it local, keep tool-approval prompts on, and never expose it over a network.</text>
+
+  <defs>
+    <marker id="a4" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#3b3b3b"/>
+    </marker>
+    <marker id="a4g" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M 0 0 L 10 5 L 0 10 z" fill="#1f7a45"/>
+    </marker>
+  </defs>
+</svg>
