@@ -12,7 +12,7 @@ Where this file sits in the MCP picture:
     (host + client)                                            (MCP server)     (the service)
 
 The host launches this script as a child process, then talks to it over
-stdin/stdout. We never write any of that plumbing ourselves — FastMCP does it.
+stdin/stdout. We never write any of that plumbing ourselves — MCPServer does it.
 
 See README.md for the full explanation and diagrams.
 """
@@ -20,11 +20,15 @@ See README.md for the full explanation and diagrams.
 import os
 import subprocess
 
-# FastMCP is the high-level helper shipped inside the `mcp` package.
+# MCPServer is the high-level helper shipped inside the `mcp` package.
 # It hides the boilerplate of a raw MCP server: the JSON-RPC message loop,
 # the initialize/handshake, protocol versioning, tool registration, error
 # envelopes, and the stdio transport. What is left for us is a plain function.
-from mcp.server.fastmcp import FastMCP
+#
+# In MCP v2.x the class was renamed from FastMCP → MCPServer and relocated
+# to mcp.server.mcpserver.server. We alias it to FastMCP so nothing else in
+# this file needs to change.
+from mcp.server.mcpserver.server import MCPServer as FastMCP
 
 # Create the server instance.
 # "Terminal" is the server's NAME. The host shows this name in its UI and uses
@@ -36,9 +40,24 @@ mcp = FastMCP("Terminal")
 # its working directory (cwd), so relative paths like `mkdir demo` land here
 # instead of wherever the host happened to be launched from.
 #
+# The path has to differ by environment:
+#
+#   * running natively on Windows -> a Windows path on the host disk
+#   * running inside the Docker container -> the Linux path that the host
+#     folder is bind-mounted onto (`-v C:/.../workspace:/root/mcp/workspace`)
+#
+# The container sets DOCKER_CONTAINER=true (see the `-e` flag in the Docker
+# entry of claude_desktop_config.json), which is how we tell the two apart.
+# Without this branch the container would try to create a *relative* folder
+# literally named "d:" under /app, and every file the model creates would be
+# invisible on the host and destroyed when the --rm container exits.
+#
 # expanduser() is what makes a leading "~" work (e.g. "~/mcp/workspace").
-# An absolute path like the one below passes through unchanged.
-DEFAULT_WORKSPACE = os.path.expanduser("d:/Project/MCP/Terminal_MCP_Server/temp")
+# An absolute path passes through unchanged.
+if os.environ.get("DOCKER_CONTAINER") == "true":
+    DEFAULT_WORKSPACE = "/root/mcp/workspace"
+else:
+    DEFAULT_WORKSPACE = os.path.expanduser("d:/Project/MCP/Terminal_MCP_Server/temp")
 
 # Create the folder on startup if it does not exist yet, so the very first
 # command never fails with "directory not found". exist_ok=True makes this a
@@ -47,7 +66,7 @@ os.makedirs(DEFAULT_WORKSPACE, exist_ok=True)
 
 
 # The @mcp.tool() decorator is the whole registration step. At import time
-# FastMCP inspects this function and derives the tool definition the LLM sees:
+# MCPServer inspects this function and derives the tool definition the LLM sees:
 #
 #   name         <- the function name .............. "run_command"
 #   description  <- the docstring below ............ tells the model WHEN to use it
